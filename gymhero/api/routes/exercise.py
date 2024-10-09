@@ -37,7 +37,9 @@ def fetch_all_exercises(
         ExercisesInDB: The list of exercises fetched from the database.
     """
     skip, limit = pagination_params
-    return exercise_crud.get_many(db, skip=skip, limit=limit)
+    result = exercise_crud.get_many(db, skip=skip, limit=limit)
+    print(result)
+    return result
 
 
 @router.get(
