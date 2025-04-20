@@ -62,7 +62,10 @@ def fetch_exercise_type_by_id(exercise_type_id: int, db: Session = Depends(get_d
         HTTPException: If the exercise type with the given
         ID is not found in the database.
     """
-    exercise_type = exercise_type_crud.get_one(db, ExerciseType.id == exercise_type_id)
+    all_exercise_types = exercise_type_crud.get_all(db)  
+    exercise_type = next(
+        (et for et in all_exercise_types if et.id == exercise_type_id), None
+    )
     if exercise_type is None:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
